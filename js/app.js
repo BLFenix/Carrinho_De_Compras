@@ -1,15 +1,15 @@
 function adicionar(){
-    let selectProduto = document.getElementById("produto");
-    let produto = selectProduto.value;
-    let quebrarProduto = produto.split(" - ");
+    let produto = document.getElementById("produto").value;
+    let nomeProduto = produto.split(" - ")[0];
+    let valorProduto = parseFloat((produto.split(" - ")[1]).replace("R$",""));
 
     let quantidade = parseInt(document.getElementById("quantidade").value);
-    let nomeProduto = quebrarProduto[0];
-    let valorProduto = parseFloat((quebrarProduto[1]).replace("R$",""));
 
     mostrarCarrinho(quantidade, nomeProduto, valorProduto);
 
     mudarValorTotal(quantidade, valorProduto);
+
+    (document.getElementById("quantidade")).value = "";
 }
 
 function mostrarCarrinho(quantidade, nomeProduto, valorProduto){
@@ -22,17 +22,16 @@ function mostrarCarrinho(quantidade, nomeProduto, valorProduto){
 }
 
 function mudarValorTotal(quantidade, valorProduto){
-    let total = document.getElementById("valor-total");
-    let valTotal = parseFloat((total.textContent).replace("R$",""));
+    let tagTotal = document.getElementById("valor-total");
+    let valTotal = parseFloat(((tagTotal.textContent).replace("R$ ","")));
 
     valTotal += parseFloat(quantidade * valorProduto);
-
-    total.textContent = `R$${valTotal}`;
+    
+    tagTotal.textContent = `R$ ${valTotal}`;
 }
 
 function limpar(){
-    (document.getElementById("valor-total")).textContent = "R$1400";
-    (document.getElementById("lista-produtos")).innerHTML = `<section class="carrinho__produtos__produto">
-          <span class="texto-azul">1x</span> Celular <span class="texto-azul">R$1400</span>
-        </section>`;
+    (document.getElementById("valor-total")).textContent = "R$ 0";
+    (document.getElementById("quantidade")).value = "";
+    (document.getElementById("lista-produtos")).innerHTML = "";
 }
